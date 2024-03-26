@@ -12,6 +12,6 @@ function calcularFatorial($valor){
 
 if (isset ($_GET["f"]))
     $f = $_GET["f"];
-else    $f=0;
+    else $f=0;
 
 echo "Fatorial de: $f é: " . calcularFatorial($f);
