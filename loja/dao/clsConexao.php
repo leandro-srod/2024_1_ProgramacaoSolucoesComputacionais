@@ -12,7 +12,6 @@ class Conexao {
             return NULL;
         }
     }
-
     private static function fechar($conn){
         if ($conn) mysqli_close($conn);
     }
