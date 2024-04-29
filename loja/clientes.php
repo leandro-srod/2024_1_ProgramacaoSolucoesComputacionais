@@ -1,26 +1,49 @@
+<?php
+   include_once ("model/clsCidade.php");
+   include_once ("dao/clsCidadeDAO.php");
+   include_once ("dao/clsConexao.php");
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOJA - CIDADES</title>
+    <title>LOJA - CLIENTES</title>
 </head>
+
 <body>
-      <h1>Cadastrar cidades:</h1>  
-      <form method="POST" action="controller/salvarCidade.php?inserir">
+      <h1>Cadastrar clientes:</h1>  
+      <form method="POST" action="controller/salvarCliente.php?inserir">
             <label>Nome:</label>
-            <input type="text" placeholder="Insira o nome da cidade..." name="txtNome" />
+            <input type="text" placeholder="Insira o nome do cliente..." name="txtNome" />
+            <br><br>
+            <label>Data de Nascimento:</label>
+            <input type="date" name="txtNascimento" />
+            <br><br>
+            <label>Salário:</label>
+            <input type="numer" name="txtSalario" />
+            <br><br>
+            <label>Cidade:</label>
+                <select name="txtCidade">
+                    <option value="0"> Selecione...</option>
+                <?php
+                 $cidades = CidadeDAO::getCidades();
+                foreach($cidades as $lista){
+                    echo '<option value="'.$lista->id.'">'. $lista->nome.'</option>';
+                }
+                ?>
+                </select>
             <br><br>
             <input type="submit" value="Salvar" />
             <input type="reset" value="Limpar" />
+            
         </form>
         <br><hr>
 
         <?php
-            include_once ("model/clsCidade.php");
-            include_once ("dao/clsCidadeDAO.php");
-            include_once ("dao/clsConexao.php");
+         
 
             $cidades = CidadeDAO::getCidades();
                 if(count($cidades) == 0){

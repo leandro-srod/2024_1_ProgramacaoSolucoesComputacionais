@@ -1,25 +1,30 @@
 <?php
 class CidadeDAO{
 
-    // METODOS ESCREVER BANCO
+// METODOS ESCREVER BANCO
+
+//INSERIR
     public static function inserir($cidade){
         $nome = $cidade->nome;
         $sql = "INSERT INTO cidade (nome) VALUES ('$nome');";
         $id = Conexao::executarComRetornoId($sql);
         return $id;
     }
+
+//EDITAR
     public static function editar($cidade){
         $id = $cidade->id;
         $nome = $cidade->nome;
         $sql = "UPDATE cidade SET nome='$nome' WHERE id = $id;";
         Conexao::executar($sql);
         }
+//EXCLUIR
     public static function excluir($idCidade){
             $sql = "DELETE FROM cidade WHERE id = $idCidade;";
             Conexao::executar($sql);
             }
 
-    // METODOS CONSULTAR BANCO
+// METODO CONSULTAR BANCO
     public static function getCidades(){
         //retorna todas as cidades
         $sql = "SELECT id, nome FROM cidade ORDER BY nome;";

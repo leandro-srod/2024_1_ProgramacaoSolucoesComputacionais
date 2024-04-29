@@ -1,5 +1,7 @@
 <?php
 class Conexao {
+
+//ABRIR
     private static function abrir(){
         $banco = "market";
         $local = "localhost";
@@ -12,10 +14,13 @@ class Conexao {
             return NULL;
         }
     }
+
+//FECHAR
     private static function fechar($conn){
         if ($conn) mysqli_close($conn);
     }
 
+//CONSULTAR
     public static function consultar($sql){
         $conn = self::abrir();
         if ($conn){
@@ -27,6 +32,7 @@ class Conexao {
         }
     }
 
+//EXECUTAR
     public static function executar($sql){
         $conn = self::abrir();
         if ($conn){
@@ -34,7 +40,8 @@ class Conexao {
             self::fechar($conn);
             }
     }
-
+    
+//CONSULTAR COM RETORNO ID
     public static function executarComRetornoId($sql){
         $conn = self::abrir();
         $id = 0;
