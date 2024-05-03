@@ -1,9 +1,13 @@
 <?php
 	require_once('conexao.php');
-    Class Cidade extends conexao{
+    Class Cliente extends conexao{
         private $id;
         private $nome;
-        private $tabela = 'cidade';
+        private $nascimento;
+        private $salario;
+        private $codCidade;
+
+        private $tabela = 'cliente';
 
 	//construtor
     public function __construct(){
@@ -28,12 +32,37 @@
         $this->nome = $nome;
     }
 
-	
+    public function getNascimento(){
+		return $this->nascimento;
+	}
+
+	public function setNascimento($nascimento){
+		$this->nascimento = $nascimento;
+	}
+
+	public function getSalario(){
+		return $this->salario;
+	}
+
+	public function setSalario($salario){
+		$this->salario = $salario;
+	}
+
+	public function getCodCidade(){
+		return $this->codCidade;
+	}
+
+	public function setCodCidade($codCidade){
+		$this->codCidade = $codCidade;
+	}
+
+			
        
 
     //consulta no banco
     public function consulta(){
-        $sql = "SELECT id,nome FROM $this->tabela";
+        $sql = "SELECT id,nome,nascimento,salario,codCidade 
+        FROM $this->tabela";
         $result = $this->conn->query($sql) 
         or die("Falha na consulta");
         
@@ -46,17 +75,21 @@
     }
 
     public function consultaID($id){
-        $nome = '';
-        $sql = "SELECT nome FROM $this->tabela WHERE id = ?";
+        $nome='';$nascimento='';$salario='';$codCidade='';
+        $sql = "SELECT nome,nascimento,salario,codCidade
+        FROM $this->tabela WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param('i',$id);
         $stmt->execute();
 
         if($stmt == true){
             $stmt->store_result();
-            $stmt->bind_result($nome);
+            $stmt->bind_result($nome,$nascimento,$salario,$codCidade);
             $stmt->fetch();
-            $this->setNome($nome);    
+            $this->setNome($nome); 
+            $this->setNascimento($nascimento); 
+            $this->setSalario($salario); 
+            $this->setCodCidade($codCidade); 
         }else{
             die("Falha na consulta!");
         }
@@ -66,14 +99,14 @@
     }
     
 
-    public function inserir($nome){
-        $sql = "INSERT INTO $this->tabela(nome) VALUES(?)";
+    public function inserir($nome, $nascimento, $salario, $codCidade){
+        $sql = "INSERT INTO $this->tabela(nome,nascimento,salario,codCidade) VALUES(?,?,?,?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('s',$nome);
+        $stmt->bind_param('ssdi',$nome,$nascimento,$salario,$codCidade);
         $stmt->execute();
         
         if($stmt == true){
-            header( "Location: ../view/cidades.php?nome=$nome");
+            header( "Location: ../view/Clientes.php?nome=$nome");
         }else{
             die("Falha no cadastro!");
         }
@@ -82,15 +115,15 @@
     }
 
 
-    public function editar($nome, $id){
-        $sql = "UPDATE $this->tabela SET nome = ? WHERE id = ?";
+    public function editar($nome,$nascimento,$salario,$codCidade, $id){
+        $sql = "UPDATE $this->tabela SET nome = ?, nascimento = ?, salario = ?, codCidade = ? WHERE id = ?";
         
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('si',$nome,$id);
+        $stmt->bind_param('ssdii',$nome,$nascimento,$salario,$codCidade,$id);
         $stmt->execute();
         
         if($stmt == true){
-            header( "Location: ../view/cidades.php?novoNome=$nome");
+            header( "Location: ../view/Clientes.php?novoNome=$nome");
         }else{
             die("Falha ao Atualizar!");
         }
@@ -110,7 +143,7 @@
         $stmt->execute();
         
         if($stmt == true){
-            header( "Location: ../view/cidades.php?excluido");
+            header( "Location: ../view/Clientes.php?excluido");
         }else{
             die("Falha ao excluir!");
         }

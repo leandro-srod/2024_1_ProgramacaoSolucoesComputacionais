@@ -1,9 +1,13 @@
 <?php
     $id = $_GET['id'];
-    require_once('../controller/cidadeController.php');
-    $controller = new cidadeController();
-    $cidade = $controller->consultaID($id);
-    $nome = $cidade->getNome();
+    require_once('../controller/clienteController.php');
+    $controller = new clienteController();
+    $cliente = $controller->consultaID($id);
+    $nome = $cliente->getNome();
+    $nascimento = $cliente->getNascimento();
+    $salario = $cliente->getSalario();
+    $codCidade = $cliente->getCodCidade();
+    
 
 ?>
 <!DOCTYPE html>
@@ -12,22 +16,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja - Editar Cidade</title>
+    <title>Loja - Editar Cliente</title>
 </head>
 
 <body>
-    <h1>Editar Cidade</h1>
+    <h1>Editar Cliente</h1>
 
-    <form method="POST" action="../controller/cidadeController.php?action=editarCidade">
-        <label>Nome: </label>
+    <form method="POST" action="../controller/clienteController.php?action=editarCliente">
         <input type="hidden" value="<?=$id?>" name="id" />
+        <label>Nome: </label>
         <input type="text" value="<?=$nome?>" name="txtNome" />
+        <br>
+        <label>Nascimento: </label>
+        <input type="date" value="<?=$nascimento?>" name="txtNascimento" />
+        <br>
+        <label>Salario: </label>
+        <input type="text" value="<?=$salario?>" name="txtSalario" />
+        <br>
+        <label>Código Cidade: </label>
+        <input type="text" value="<?=$codCidade?>" name="txtCodCidade" />
         <br>
         <input type="submit" value="Salvar" />
         <input type="reset" value="Limpar" />
     </form>
     <hr>
-
     <?php
 
         if( isset($_REQUEST["nomeVazio"])){

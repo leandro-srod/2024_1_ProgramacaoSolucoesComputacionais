@@ -10,7 +10,6 @@
         }
 
         public function consultaID($id){
-            $id ='';
             $cidade = new Cidade();
             $result = $cidade->consultaID($id);
             return $cidade;
@@ -49,6 +48,7 @@
             }
         }
 
+
         public function excluir(){
             $id = $_GET['id'];
             $excluiCidade = new Cidade();
@@ -56,6 +56,7 @@
             
         }
         
+
         public function handleRequest() {
             if (isset($_GET['action']) && $_GET['action'] == 'inserirCidade'){
                 $this->inserir();
@@ -68,9 +69,12 @@
             if (isset($_GET['action']) && $_GET['action'] == 'excluirCidade'){
                 $this->excluir();
             } 
+
         }
         
     }
     $CidadeController = new CidadeController();
     $CidadeController->handleRequest();
+    
 
+    
