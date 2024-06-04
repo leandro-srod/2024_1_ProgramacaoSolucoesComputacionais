@@ -3,7 +3,7 @@ class Conexao {
 
 //ABRIR
     private static function abrir(){
-        $banco = "market";
+        $banco = "market_2024_1";
         $local = "localhost";
         $user = "root";
         $senha = "";

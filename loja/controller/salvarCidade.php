@@ -11,7 +11,6 @@ if(isset($_REQUEST["inserir"])){
     if(strlen($nome) == 0 ){
         header("Location: ../cidades.php?nomeVazio");
     }else{
-      
         $novaCid = new Cidade();
         $novaCid->nome = $nome;
         CidadeDAO:: inserir($novaCid);
@@ -25,4 +24,14 @@ if(isset($_REQUEST["excluir"]) && isset($_REQUEST["id"])){
     $id = $_REQUEST["id"];
     CidadeDAO:: excluir($id);
     header("Location: ../cidades.php?cidadeExcluida");
+}
+
+
+// EDITAR CIDADE
+
+if( isset( $_REQUEST["editar"] ) &&  isset( $_REQUEST["id"] ) ){
+    $nome = $_POST["txtNome"];
+    $id = $_REQUEST["id"];
+    CidadeDAO::editar( $nome, $id );
+    header( "Location: ../cidades.php?cidadeEditada");
 }

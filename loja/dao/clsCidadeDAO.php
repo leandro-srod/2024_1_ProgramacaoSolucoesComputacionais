@@ -12,12 +12,13 @@ class CidadeDAO{
     }
 
 //EDITAR
-    public static function editar($cidade){
-        $id = $cidade->id;
-        $nome = $cidade->nome;
-        $sql = "UPDATE cidade SET nome='$nome' WHERE id = $id;";
-        Conexao::executar($sql);
-        }
+public static function editar( $cidade, $id ){
+    $id_cidade = $id;
+    $nome = $cidade;
+    $sql = "UPDATE cidade SET nome = '$nome' WHERE id = $id_cidade ;" ;
+    Conexao::executar( $sql );
+}
+
 //EXCLUIR
     public static function excluir($idCidade){
             $sql = "DELETE FROM cidade WHERE id = $idCidade;";
@@ -25,6 +26,7 @@ class CidadeDAO{
             }
 
 // METODO CONSULTAR BANCO
+
     public static function getCidades(){
         //retorna todas as cidades
         $sql = "SELECT id, nome FROM cidade ORDER BY nome;";
@@ -37,8 +39,21 @@ class CidadeDAO{
                 $cid->nome = $_nome;
                 $lista->append($cid);
                 }
-        return $lista;
+         }
+         return $lista;
     }
 
+    public static function getCidadesById($id){
+        $sql = "SELECT id , nome FROM cidade WHERE id = $id";
+        $result = Conexao::consultar( $sql );
+        if( $result != NULL ){
+            $row = mysqli_fetch_assoc($result);
+            if($row){
+                $cidade = new Cidade();
+                $cidade->nome = $row['nome'];
+                return $cidade;
+            }
+        }
+        return null;
     }
 }
